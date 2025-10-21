@@ -1,0 +1,54 @@
+.papers-section {
+  padding: 40px;
+}
+
+.papers-section h2 {
+  text-align: center;
+}
+
+.tracks-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.tracks-list, .deadlines-list {
+  flex: 1;
+  min-width: 300px;
+}
+
+.tracks-list ul {
+  list-style-type: '🔬'; /* Example, can use other icons */
+}
+
+.tracks-list li {
+  padding-left: 10px;
+}
+
+.deadlines-list .deadline-items {
+  list-style-type: none;
+  margin-left: 0;
+}
+
+.deadlines-list li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed var(--border-color);
+  padding: 12px 0;
+}
+
+.deadlines-list li span {
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.submission-link {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 30px;
+  padding: 15px;
+  background-color: var(--light-color);
+  border-radius: 8px;
+}

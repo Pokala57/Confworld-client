@@ -1,0 +1,21 @@
+.why-join-section {
+  padding: 40px;
+}
+
+.why-join-section h2 {
+  text-align: center;
+}
+
+.benefits-list {
+  list-style-type: '✅';
+  padding-left: 10px;
+  margin-top: 20px;
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+
+.benefits-list li {
+  padding-left: 10px;
+  font-size: 1.1rem;
+}
