@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-
-// Import all your components
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage';
 import RegistrationPage from './pages/RegistrationPage';
+import { baseUrl } from './const';
 
+// --- NEW IMPORTS ---
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-
   const [conferenceData, setConferenceData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,9 +19,8 @@ function App() {
     // Fetch data from your backend
     const fetchData = async () => {
       try {
-        // We use the full URL for the dev server
-        // In production, this would be '/api/data'
-        const response = await fetch('http://localhost:3001/api/data');
+        // Using http://localhost:3001 for dev
+        const response = await fetch(`${baseUrl}/api/data`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -36,24 +36,34 @@ function App() {
     fetchData();
   }, []);
 
-
   return (
     <>
+      {/* --- ADD THIS COMPONENT --- */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000} // Auto close after 3 seconds
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover
+        theme="light"
+      />
+      {/* --------------------------- */}
+      
       <Header />
       <main>
         <Routes>
-          <Route
-            path="/"
+          <Route 
+            path="/" 
             element={
-              <HomePage
-                data={conferenceData}
-                loading={loading}
-                error={error}
+              <HomePage 
+                data={conferenceData} 
+                loading={loading} 
+                error={error} 
               />
-            }
+            } 
           />
           <Route path="/register" element={<RegistrationPage />} />
-          {/* Add other routes here, e.g., <Route path="/committee" element={<CommitteePage />} /> */}
         </Routes>
       </main>
       <Footer />

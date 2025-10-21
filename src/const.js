@@ -1,0 +1,1 @@
+export let baseUrl = "https://confworld-server.onrender.com"

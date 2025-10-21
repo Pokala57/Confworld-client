@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import './RegistrationPage.css';
 
+// --- NEW IMPORTS ---
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { baseUrl } from '../const';
+
 const RegistrationPage = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -9,24 +15,23 @@ const RegistrationPage = () => {
     paperTitle: '',
     presentationType: 'oral',
   });
-  const [message, setMessage] = useState('');
-  const [isError, setIsError] = useState(false);
+  
+  // --- REMOVE OLD STATE ---
+  // const [message, setMessage] = useState('');
+  // const [isError, setIsError] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  // --- ADD NAVIGATE HOOK ---
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage('');
-    setIsError(false);
+    
+    // --- REMOVE OLD STATE RESETS ---
+    // setMessage('');
+    // setIsError(false);
 
     try {
-      const response = await fetch('http://localhost:3001/api/register', {
+      const response = await fetch(`${baseUrl}/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,9 +45,10 @@ const RegistrationPage = () => {
         throw new Error(result.message || 'Registration failed');
       }
 
-      // Success
-      setMessage('Registration successful! We will contact you shortly.');
-      setIsError(false);
+      // --- SUCCESS ---
+      toast.success('Registration successful! Redirecting to home...',{autoClose:2000});
+      
+      // Clear the form
       setFormData({
         name: '',
         email: '',
@@ -50,10 +56,24 @@ const RegistrationPage = () => {
         paperTitle: '',
         presentationType: 'oral',
       });
+
+      // Redirect to home page after 2 seconds (so user can read toast)
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+
     } catch (error) {
-      setMessage(error.message);
-      setIsError(true);
+      // --- FAILURE ---
+      toast.error(error.message,{autoClose:2000});
     }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -63,6 +83,8 @@ const RegistrationPage = () => {
         <p>Please fill out the form below to register for the conference.</p>
 
         <form className="registration-form" onSubmit={handleSubmit}>
+          {/* ... all your form-group divs ... */}
+          
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
             <input
@@ -120,11 +142,12 @@ const RegistrationPage = () => {
             </select>
           </div>
           
-          {message && (
+          {/* --- REMOVE THIS MESSAGE BLOCK --- */}
+          {/* {message && (
             <div className={`form-message ${isError ? 'error' : 'success'}`}>
               {message}
             </div>
-          )}
+          )} */}
 
           <button type="submit" className="submit-btn">Register Now</button>
         </form>
